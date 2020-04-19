@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { FaCode } from "react-icons/fa";
 import { Card, Icon, Avatar, Col, Typography, Row } from 'antd';
 import Axios from 'axios';
@@ -6,15 +6,19 @@ import moment from 'moment';
 const { Title } = Typography
 const { Meta } = Card;
 
-function LandingPage() {
+function SubscriptionPage() {
 
     const [Video, setVideo] = useState([])
 
     useEffect(() => {
-        Axios.get('/api/video/getVideos')
+
+        const subscriptionVariable = {
+            userFrom: localStorage.getItem('userId')
+        }
+
+        Axios.post('/api/video/getSubscriptionVideos', subscriptionVariable)
             .then(response => {
                 if(response.data.success) {
-                    console.log(response.data)
                     setVideo(response.data.videos)
                 } else {
                     alert('비디오 가져오기를 실패했습니다.')
@@ -61,4 +65,4 @@ function LandingPage() {
     )
 }
 
-export default LandingPage
+export default SubscriptionPage
